@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {updateStepThree, cancel} from '../../ducks/reducer';
 import axios from 'axios';
 
 class StepThree extends Component{
@@ -13,6 +15,12 @@ class StepThree extends Component{
         this.addHouse = this.addHouse.bind(this);
 
     }
+    componentDidMount(){
+        this.setState({
+            monthlyMortgage: this.props.monthlyMortgage,
+            desiredRent: this.props.desiredRent
+        })
+    }
     handleMortgage(e){
         this.setState({
             monthlyMortgage:e,
@@ -24,18 +32,15 @@ class StepThree extends Component{
         })
     }
     addHouse(){
-        axios.post('/api/houses',{name: this.state.name,
-                                  address: this.state.address,
-                                  city: this.state.city,
-                                  state: this.state.state,
-                                  zipcode: this.state.zipcode}).then(() =>{
-                                      this.setState({
-                                        name: "",
-                                        address: "",
-                                        city: "",
-                                        state: "",
-                                        zipcode: "",
-                                      })
+        axios.post('/api/houses',{name: this.props.name,
+                                address: this.props.address,
+                                city: this.props.city,
+                                state: this.props.state,
+                                zipcode: this.props.zipcode,
+                                image_url: this.props.image_url,
+                                monthlyMortgage: this.state.monthlyMortgage,
+                                desiredRent: this.state.desiredRent}).then(() =>{
+                                      this.props.cancel();
                                   })
     }
     render(){
@@ -50,7 +55,8 @@ class StepThree extends Component{
                     <input type="text" value={this.state.desiredRent} onChange={(e) => this.handleRent(e.target.value)}/>                    
                 </div>
                 <Link to='/wizard/step2'>
-                    <button>Previous Step</button>
+                    <button
+                     onClick={() => this.props.updateStepThree(this.state.monthlyMortgage, this.state.desiredRent)}>Previous Step</button>
                 </Link>
                 <button onClick={this.addHouse}>Complete</button>
             </div>
@@ -58,4 +64,17 @@ class StepThree extends Component{
     }
 }
 
-export default StepThree
+function mapStateToProps(state){
+    return{
+        name: state.name,
+        address: state.address,
+        city: state.city,
+        state: state.state,
+        zipcode: state.zipcode,
+        image_url: state.image_url,
+        monthlyMortgage: state.monthlyMortgage,
+        desiredRent: state.desiredRent
+    }
+}
+
+export default connect(mapStateToProps, {updateStepThree, cancel})(StepThree)

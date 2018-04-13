@@ -34,6 +34,9 @@ class Dashboard extends Component{
                     city={house.city}
                     state={house.state}
                     zip={house.zipcode}
+                    image_url={house.image}
+                    monthlyMortgage={house.monthly_mortgage}
+                    desiredRent={house.desired_rent}
                     id={house.id}
                     deleteFn={this.deleteHouse}/>
         })
