@@ -9,6 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 
 app.get('/api/houses', con.read)
 app.post('/api/houses', con.create)

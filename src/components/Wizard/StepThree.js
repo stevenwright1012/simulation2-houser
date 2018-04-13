@@ -40,7 +40,8 @@ class StepThree extends Component{
                                 image_url: this.props.image_url,
                                 monthlyMortgage: this.state.monthlyMortgage,
                                 desiredRent: this.state.desiredRent}).then(() =>{
-                                      this.props.cancel();
+                                    // <Link />
+                                    this.props.cancel();
                                   })
     }
     render(){
@@ -58,7 +59,9 @@ class StepThree extends Component{
                     <button
                      onClick={() => this.props.updateStepThree(this.state.monthlyMortgage, this.state.desiredRent)}>Previous Step</button>
                 </Link>
-                <button onClick={this.addHouse}>Complete</button>
+                <Link to='/'>
+                    <button onClick={this.addHouse}>Complete</button>
+                </Link>
             </div>
         )
     }
