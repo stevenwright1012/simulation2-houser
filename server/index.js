@@ -1,15 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 const con = require('./controller');
 const massive = require('massive');
 require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
-massive(process.env.CONNECTION_STRING).then(dbInstance => {
+
+app.get('/api/houses', con.read)
+app.post('/api/houses', con.create)
+app.delete('/api/houses/:id', con.delete)
+
+
+massive(process.env.CONNECTION_STRING).then(dbInstance =>{
     app.set('db', dbInstance)
-})
-
-const port = 4000
-app.listen(port, console.log(`Listening on ${port}`))
+    app.listen(4000, () => console.log(`Listening on 4000`))
+});
