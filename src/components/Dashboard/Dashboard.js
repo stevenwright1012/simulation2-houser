@@ -10,9 +10,12 @@ class Dashboard extends Component{
         this.state = {
             homes: []
         }
+        this.deleteHouse = this.deleteHouse.bind(this);
     }
     componentDidMount(){
         axios.get('/api/houses').then(res => {
+            console.log(res);
+            
             this.setState({
                homes: res.data,
             })
@@ -30,7 +33,9 @@ class Dashboard extends Component{
                     address={house.address}
                     city={house.city}
                     state={house.state}
-                    zip={house.zipcode}/>
+                    zip={house.zipcode}
+                    id={house.id}
+                    deleteFn={this.deleteHouse}/>
         })
         return(
             <div>

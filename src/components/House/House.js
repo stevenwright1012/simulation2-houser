@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function House(props){
-    var {name, address, city, state, zip} = props
+    var {name, address, city, state, zip, id} = props
     return(
         <div>
             {name},
@@ -9,7 +9,7 @@ export default function House(props){
             {city},
             {state},
             {zip}
-            <button>Delete</button>
+            <button onClick={() => props.deleteFn(id)}>Delete</button>
         </div>
     )
 }
