@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {updateStepThree, cancel} from '../../ducks/reducer';
 import axios from 'axios';
+import { push } from 'react-router-dom'
 
 class StepThree extends Component{
     constructor(){
@@ -40,8 +41,8 @@ class StepThree extends Component{
                                 image_url: this.props.image_url,
                                 monthlyMortgage: this.state.monthlyMortgage,
                                 desiredRent: this.state.desiredRent}).then(() =>{
-                                    // <Link />
                                     this.props.cancel();
+                                    dispatch(push('/'));
                                   })
     }
     render(){
@@ -59,9 +60,9 @@ class StepThree extends Component{
                     <button
                      onClick={() => this.props.updateStepThree(this.state.monthlyMortgage, this.state.desiredRent)}>Previous Step</button>
                 </Link>
-                <Link to='/'>
+                {/* <Link to='/'> */}
                     <button onClick={this.addHouse}>Complete</button>
-                </Link>
+                {/* </Link> */}
             </div>
         )
     }
